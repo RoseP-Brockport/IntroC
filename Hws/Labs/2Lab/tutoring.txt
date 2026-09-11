@@ -1,0 +1,13 @@
+Tutoring is available for classes in the Department of Computing Scienes.
+Turors are located in the Grace Lab.
+
+On Mondays you can get help in the Grace Lab from one twenty pm unitl
+two twenty pm.
+
+On Thursdays, you can find help in the Grace
+Lab from two pm until four pm.
+
+On Fridays, you can find help in the Grace Lab with two different turors.
+
+One works in the lab from one twenty until two twenty, the other from three
+pm until five pm.
