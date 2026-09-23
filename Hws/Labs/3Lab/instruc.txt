@@ -1,0 +1,81 @@
+
+This zip includes 3 files, all of which you will need to modify as part of this lab: filter.c, filter.h, and main.c.
+
+filter.c
+filter.c includes 3 functions that you must complete. You may change the name used for parameters, but you may not change the type of these parameters.
+
+void print_array(int to_print[])
+
+You are to print the provided integer array. All provided arrays will be of length MAX_ELEMENTS, a value defined in filter.h.
+All elements other than the final element is to be followed by a comma
+The final element is to be followed by a new line
+Example outputs for the entire program are found in the “Example Output” section below
+void filter_evens(int origin_array[], int to_array[])
+
+You are provided two arrays of length MAX_ELEMENTS
+You must copy all even integers from the first array to the second array.
+The second array should be populated in order, there should not be gaps created due to a distance between elements in the original array
+0 is to be considered as even for this function.
+There will be space left at the end of the new array, fill all remaining slots with 0
+Example: an origin array of [0,1,2,3,4,5] would fill the second array with [0,2,4,0,0,0]
+void filter_odd_indexes(int origin_array[], int to_array[])
+
+You are provided two arrays of length MAX_ELEMENTS
+You must copy all elements at odd indexes to the second array
+The second array should be populated in order, there should not be gaps created due to a distance between elements in the original array
+0 is to be considered as even for this function.
+There will be space left at the end of the new array, fill all remaining slots with 0
+Example: an origin array of [9,8,7,6,5,4] would fill the second array with [8,6,4,0,0,0]
+filter.h
+filter.h is the header file for filter.c. You are to complete this header file so that all functions from filter.c are properly declared.
+
+You must also write the include guard.
+
+main.c
+Your main file should, after the code provided for generating an array, perform the following tasks:
+
+Print the generated array with the print_array function you wrote
+Create necessary variable(s) and call the filter_evens function you wrote
+Print the filtered array with the print_array function
+Create necessary variable(s) and call the filter_odd_indexes function you wrote
+Print the filtered array with the print_array function
+Example Output
+root@c342b37b678c:/workspace/Lab3_219# ./arrays
+
+0,37,74,11,48,85,22,59,96,33,70,7,44,81,18,55,92,29,66,3,40,77,14,51,88
+
+0,74,48,22,96,70,44,18,92,66,40,14,88,0,0,0,0,0,0,0,0,0,0,0,0
+
+37,11,85,59,33,7,81,55,29,3,77,51,0,0,0,0,0,0,0,0,0,0,0,0,0
+
+Requirements & Rules
+Use inline (//) comments to explain complex lines or lines where behavior may not be obvious to a reader.
+You may not assume that a created array will automatically be populated with 0s.
+You may take any approach to have 0s fill the final elements of the array you copy to, but there must be code present to accomplish this task
+You must complete all 3 functions in filter.c, implement the required functionality in main.c and complete the header file filter.h
+You may not alter function signatures beyond changing the names of parameters.
+You may not hardcode any output
+You may not alter the code for generating the origin array found in main.c
+Your function must compile without any warnings or errors produced by the compiler with the -Wall or -Wextra arguments
+Helpful Hints
+The % (modulus) operator can be helpful for this lab.
+When compiling use “-Wall” and “-Wextra” as arguments to see warnings to correct before submission. These can be added to the end of your compile command.
+Ask for help if you need it! This is meant to be a learning experience not a test.
+Remember to only include the .c files when you compile, not the .h files
+Submission
+Create a zip file called “Lab3.zip” that contains only main.c, filter.c, and filter.h and submit the zip file to the Assignments tab on Brightspace
+Do not include any compiled code, only the .c and .h files
+This lab is due on September 24th at 3:30 pm
+Grading
+The allocation of points to various aspects of the work is provided below. Please see the Brightspace Rubric for a full explanation of where points are earned.
+
+5 points – The program compiles without warnings
+
+5 points – The program runs without crashing
+
+15 points – The filter.h file is correctly constructed
+
+60 points – The functions in filter.c (20 points each)
+
+15 points – The main.c file meets requirements
+
