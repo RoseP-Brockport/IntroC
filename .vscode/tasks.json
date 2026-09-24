@@ -9,7 +9,9 @@
                 "-g",
                 "${fileDirname}/*.c",
                 "-o",
-                "${fileDirname}/${fileBasenameNoExtension}"
+                "${fileDirname}/${fileBasenameNoExtension}",
+                "-Wall",
+                "-Wextra"
             ],
             "options": {
                 "cwd": "${fileDirname}"
