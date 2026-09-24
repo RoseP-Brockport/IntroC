@@ -10,6 +10,8 @@ You are to print the provided integer array. All provided arrays will be of leng
 All elements other than the final element is to be followed by a comma
 The final element is to be followed by a new line
 Example outputs for the entire program are found in the “Example Output” section below
+
+
 void filter_evens(int origin_array[], int to_array[])
 
 You are provided two arrays of length MAX_ELEMENTS
@@ -18,6 +20,8 @@ The second array should be populated in order, there should not be gaps created 
 0 is to be considered as even for this function.
 There will be space left at the end of the new array, fill all remaining slots with 0
 Example: an origin array of [0,1,2,3,4,5] would fill the second array with [0,2,4,0,0,0]
+
+
 void filter_odd_indexes(int origin_array[], int to_array[])
 
 You are provided two arrays of length MAX_ELEMENTS
@@ -25,6 +29,9 @@ You must copy all elements at odd indexes to the second array
 The second array should be populated in order, there should not be gaps created due to a distance between elements in the original array
 0 is to be considered as even for this function.
 There will be space left at the end of the new array, fill all remaining slots with 0
+
+
+
 Example: an origin array of [9,8,7,6,5,4] would fill the second array with [8,6,4,0,0,0]
 filter.h
 filter.h is the header file for filter.c. You are to complete this header file so that all functions from filter.c are properly declared.
