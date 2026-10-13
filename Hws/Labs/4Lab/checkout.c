@@ -119,8 +119,9 @@ line read_line() {
         new_line.data[i] = ch;
     }
 
+
    }
-   printf("%s", new_line.data);
+   printf("test %s test\n", new_line.data);
    return new_line;
 
 }
