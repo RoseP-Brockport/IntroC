@@ -19,6 +19,7 @@ Quantities should be printed as %6d
 (see the writeup document for an example)
 */
 void print_receipt(item order[], int item_count) {
+
     for(int i = 0; i < item_count; i++){
         printf("%25s @ %9.2f x %6d = %9.2f\n", order[i].name, order[i].price, order[i].quantity, order[i].price*order[i].quantity);
     }
@@ -54,7 +55,9 @@ item process_line(line new_line) {
                 quanlen = i-namelen-1;
                 new_item.quantity = atoi(tempp);
             }
-
+            for(int i = 0; i < (int)strlen(tempp); i++){
+                tempp[i] = 0;
+            }
             segment++;
             continue;
         }
