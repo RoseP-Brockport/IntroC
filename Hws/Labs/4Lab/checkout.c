@@ -20,7 +20,7 @@ Quantities should be printed as %6d
 */
 void print_receipt(item order[], int item_count) {
     for(int i = 0; i < item_count; i++){
-        printf("%25s @ %9.2f x %6d = %9.2f", order[i].name, order[i].price, order[i].quantity, order[i].price*order[i].quantity);
+        printf("%25s @ %9.2f x %6d = %9.2f\n", order[i].name, order[i].price, order[i].quantity, order[i].price*order[i].quantity);
     }
     return;
 
@@ -120,6 +120,7 @@ line read_line() {
 }
 
 int main() {
+    printf("running\n");
     item order[MAX_ITEMS];
     int item_index = 0;
     line temp_line = {"",FALSE};
