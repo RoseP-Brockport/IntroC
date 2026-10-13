@@ -13,6 +13,17 @@ This main function does the following sequence:
 */
 int main() {
 
+    char building = NULL;
+    int sensor = NULL;
+    // if ur sensor reads -200, either the code broke, or you have bigger problems than this being hardcoded to initialize
+    double temp = -200;
+
+
+    // return 0 for success, assume 1 for fail then
+    read_in();
+
+    printf("Building %c Sensor %d Reports temperature of %.2f\n", building, sensor, temp);
+
     return 0;
 
 }

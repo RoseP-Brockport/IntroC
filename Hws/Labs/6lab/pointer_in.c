@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <math.h>
 
 #include "pointers_in.h"
 
@@ -18,6 +19,43 @@ COMPLETE THIS DOCUMENTATION WITH YOUR PARAMETERS
 
 */
 void read_in(/*Fill in paramaters*/) {
+
+
+    // read in from input of for BD,T
+    // read Char (always 1 letter)
+    // read integers until hit ,
+    //read numbers until hit .    - then read 2 more
+    // format / cast to correct - send pointers back to llalaa
+    
+
+    int backsensor = 0;
+    int intcrement = 0;
+    char building = getchar();
+    
+
+    while(true){
+        char staging = getchar();
+        if (staging == ','){
+            break;
+        }
+        else {
+            strcat()
+            backsensor += (atoi(staging)*(pow(10,intcrement)))
+            intcrement ++;
+        }
+    }
+
+    while(true){
+        char staging = getchar();
+        if(staging == "."){
+            break;
+        }
+        else {
+            
+        }
+
+    }
+
 
     return;
 
