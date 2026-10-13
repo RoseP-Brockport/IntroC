@@ -19,7 +19,9 @@ Quantities should be printed as %6d
 (see the writeup document for an example)
 */
 void print_receipt(item order[], int item_count) {
-
+    for(int i = 0; i < item_count; i++){
+        printf("%25s @ %9.2f x %6d = %9.2f", order[i].name, order[i].price, order[i].quantity, order[i].price*order[i].quantity);
+    }
     return;
 
 }
@@ -33,7 +35,51 @@ data contained in the line struct.\
 */
 item process_line(line new_line) {
 
+    // im so sorry for this  code, forgive me for i have sinned
+
+
+
     item new_item;
+    char tempp[NAME_LIMIT];
+    int segment = 0;
+    int namelen;
+    int quanlen;
+    for(int i = 0; i < (int)strlen(new_line.data); i++){
+        if(new_line.data[i] == ','){
+            if(segment == 0){
+                namelen = i;
+                strcpy(new_item.name, tempp);
+            }
+            else if(segment == 1){
+                quanlen = i-namelen-1;
+                new_item.quantity = atoi(tempp);
+            }
+
+            segment++;
+            continue;
+        }
+        if(new_line.data[i] == '\n' || new_line.data[i] == EOF){
+            new_item.price = atof(tempp);
+            break;
+        }
+
+        switch (segment)
+        {
+        case 0:
+            tempp[i] = new_line.data[i];
+            break;
+        case 1:
+            tempp[i-namelen-2] = new_line.data[i];
+            break;
+        case 2:
+            tempp[i-namelen-quanlen-3] = new_line.data[i];
+            break;
+
+        default:
+            break;
+        }
+
+    }
     return new_item;    
 
 }
@@ -49,7 +95,26 @@ set to TRUE, otherwise, it is set to FALSE
 */
 line read_line() {
 
+
    line new_line;
+   //set to false unless hits EOF which will make it true
+   new_line.last_line = FALSE;
+
+   // check eof, if eof, set last line true, break, if just \n then break, else, add to string
+   for(int i = 0; i < (int)strlen(new_line.data); i++){
+    char ch = getchar();
+    if(ch == EOF){
+        new_line.last_line = TRUE;
+        break;
+    }
+    if(ch == '\n'){
+        break;
+    }
+    else{
+        new_line.data[i] = ch;
+    }
+
+   }
    return new_line;
 
 }
@@ -69,3 +134,5 @@ int main() {
     print_receipt(order, item_index);
     return 0;
 }
+
+// /usr/bin/gcc -fdiagnostics-color=always -g /home/Blake/Documents/BrockY3S1/IntroC/Hws/Labs/4Lab/*.c -o /home/Blake/Documents/BrockY3S1/IntroC/Hws/Labs/4Lab/checkout -Wall -Wextra < /home/Blake/Documents/BrockY3S1/IntroC/Hws/Labs/4Lab/order1.csv
