@@ -50,8 +50,7 @@ item process_line(line new_line) {
         //have to check if comma, 
         // if comma go from name -> quantity or quantity -> price
 
-        printf("value of data:%c\n",new_line.data[i]);
-        printf("%s\n",temp);
+
         switch (seg)
         {
         case 1:
@@ -80,7 +79,6 @@ item process_line(line new_line) {
             break;
         case 3:
             if(new_line.data[i] == '\n' || new_line.data[i] == EOF){
-                printf("hithit\n");
                 new_item.price = atof(temp);
                 // dont need to clear array because we are done
                 seg++;
@@ -95,7 +93,6 @@ item process_line(line new_line) {
     new_item.price = atof(temp);
 
 
-    printf("price:%9.2f,quantity:%d,name:%s\n",new_item.price,new_item.quantity,new_item.name);
     return new_item;    
 
 }
