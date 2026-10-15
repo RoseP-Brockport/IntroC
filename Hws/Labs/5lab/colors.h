@@ -13,7 +13,7 @@ Index 3 = Alpha
 */
 typedef union {
 unsigned hex;
-unsigned char RGBA[5];
+unsigned char RGBA[4];
 
     
 

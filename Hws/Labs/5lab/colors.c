@@ -23,6 +23,12 @@ IF YOUR HEX OUTPUT IS REVERSED FROM MINE, IT IS FINE
 @param c The color union to print.
 */
 void print_color(color c) {
+    printf("Hex: 0x%x\n",c.hex);
+    printf("Red: %6d\n",c.RGBA[0]);
+    printf("Green: %4d\n",c.RGBA[1]);
+    printf("Blue: %5d\n",c.RGBA[2]);
+    printf("Alpha: %4d\n",c.RGBA[3]);
+
 
 }
 
@@ -34,6 +40,7 @@ Sets the Red value in the union to the provided red value
 @return the modified union.
 */
 color set_red(color c, unsigned char red) {
+    c.RGBA[0] = red;
     return c;
 }
 
@@ -45,6 +52,7 @@ Sets the Green value in the union to the provided green value
 @return the modified union.
 */
 color set_green(color c, unsigned char green) {
+    c.RGBA[1] = green;
     return c;
 }   
 
@@ -56,6 +64,7 @@ Sets the Blue value in the union to the provided blue value
 @return the modified union.
 */
 color set_blue(color c, unsigned char blue) {
+    c.RGBA[2] = blue;
     return c;
 }
 
@@ -67,6 +76,7 @@ Sets the Alpha value in the union to the provided Alpha value
 @return the modified union.
 */
 color set_alpha(color c, unsigned char alpha) {
+    c.RGBA[3] = alpha;
     return c;
 }
 
@@ -80,8 +90,23 @@ Hint: strtol(your_string_here, NULL, 16) can be used to get the hex value for th
 @param colors The array of collors to fill with values read in with getchar()
 */
 void read_colors(color colors[]) {
-    char tempstring[11];
-    // 
+    char tempstring[MAX_COLORS+1] = {[MAX_COLORS]='\0'};
+    //read into tempstring until newline (remember null terminator)
+    //do next line until eof
+    color tempcol;
+
+    for(int x = 0;;  x++){
+        for(int i = 0; i < 10; i++){
+            tempstring[i] = getchar();
+            if(tempstring[i] == EOF){
+                return;
+            }
+        }
+        tempcol.hex = strtol(tempstring, NULL, 16);
+        colors[x] = tempcol;
+        getchar();
+
+    }
     
     
 }
