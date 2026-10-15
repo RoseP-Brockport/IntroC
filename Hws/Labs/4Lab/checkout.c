@@ -20,9 +20,12 @@ Quantities should be printed as %6d
 */
 void print_receipt(item order[], int item_count) {
 
+    float total = 0;
     for(int i = 0; i < item_count; i++){
         printf("%25s @ %9.2f x %6d = %9.2f\n", order[i].name, order[i].price, order[i].quantity, order[i].price*order[i].quantity);
+        total += order[i].price*order[i].quantity;
     }
+    printf("Total Price of Purchase:%9.2f\n",total);
     return;
 
 }
@@ -131,7 +134,6 @@ line read_line() {
 
 
    }
-   printf("test %s test\n", new_line.data);
    return new_line;
 
 }
@@ -152,57 +154,3 @@ int main() {
     return 0;
 }
 
-// /usr/bin/gcc -fdiagnostics-color=always -g /home/Blake/Documents/BrockY3S1/IntroC/Hws/Labs/4Lab/*.c -o /home/Blake/Documents/BrockY3S1/IntroC/Hws/Labs/4Lab/checkout -Wall -Wextra < /home/Blake/Documents/BrockY3S1/IntroC/Hws/Labs/4Lab/order1.csv
-
-
-
-
-/*
-char tempp[NAME_LIMIT+1];
-    tempp[NAME_LIMIT+1] = '\0';
-    int segment = 0;
-    int namelen;
-    int quanlen;
-    for(int i = 0; i < (int)strlen(new_line.data); i++){
-        if(new_line.data[i] == ','){
-            if(segment == 0){
-                namelen = i;
-                strcpy(new_item.name, tempp);
-            }
-            else if(segment == 1){
-                quanlen = i-namelen-1;
-                new_item.quantity = atoi(tempp);
-            }
-            for(int i = 0; i < (int)sizeof(tempp)-1; i++){
-                tempp[i] = '\0';
-            }
-            segment++;
-            continue;
-        }
-        if(new_line.data[i] == '\n' || new_line.data[i] == EOF){
-            new_item.price = atof(tempp);
-            break;
-        }
-
-        switch (segment)
-        {
-        case 0:
-            tempp[i] = new_line.data[i];
-            break;
-        case 1:
-            tempp[i-namelen] = new_line.data[i];
-            break;
-        case 2:
-            tempp[i-namelen-quanlen] = new_line.data[i];
-            break;
-
-        default:
-            break;
-        }
-
-    }
-
-    grah
-
-
-*/
