@@ -21,9 +21,7 @@ Quantities should be printed as %6d
 void print_receipt(item order[], int item_count) {
 
     for(int i = 0; i < item_count; i++){
-        //printf("%25s @ %9.2f x %6d = %9.2f\n", order[i].name, order[i].price, order[i].quantity, order[i].price*order[i].quantity);
-
-        printf("%s,%d,%f\n", order[i].name, order[i].quantity, order[i].price);
+        printf("%25s @ %9.2f x %6d = %9.2f\n", order[i].name, order[i].price, order[i].quantity, order[i].price*order[i].quantity);
     }
     return;
 
@@ -43,48 +41,61 @@ item process_line(line new_line) {
 
 
     item new_item;
-    char tempp[NAME_LIMIT];
-    int segment = 0;
-    int namelen;
-    int quanlen;
+    // initialize array full of termination characters
+    char temp[NAME_LIMIT+1] = {'\0'};
+    int seg = 1;
+    int limit;
     for(int i = 0; i < (int)strlen(new_line.data); i++){
-        if(new_line.data[i] == ','){
-            if(segment == 0){
-                namelen = i;
-                strcpy(new_item.name, tempp);
-            }
-            else if(segment == 1){
-                quanlen = i-namelen-1;
-                new_item.quantity = atoi(tempp);
-            }
-            for(int i = 0; i < (int)strlen(tempp); i++){
-                tempp[i] = 0;
-            }
-            segment++;
-            continue;
-        }
-        if(new_line.data[i] == '\n' || new_line.data[i] == EOF){
-            new_item.price = atof(tempp);
-            break;
-        }
+        // going to have name,quan,price - 
+        //have to check if comma, 
+        // if comma go from name -> quantity or quantity -> price
 
-        switch (segment)
+        printf("value of data:%c\n",new_line.data[i]);
+        printf("%s\n",temp);
+        switch (seg)
         {
-        case 0:
-            tempp[i] = new_line.data[i];
-            break;
         case 1:
-            tempp[i-namelen-2] = new_line.data[i];
+            if(new_line.data[i] == ','){
+                strcpy(new_item.name, temp);
+                for(int y = 0; y < i; y++){
+                    temp[y] = '\0';
+                }
+                seg++;
+                break;
+            }
+            temp[i] = new_line.data[i];
             break;
         case 2:
-            tempp[i-namelen-quanlen-3] = new_line.data[i];
+            if(new_line.data[i] == ','){
+                new_item.quantity = atoi(temp);
+                limit = strlen(temp);
+            for(int y = 0; y < i-(int)strlen(new_item.name)-1; y++){
+                temp[y] = '\0';
+            }
+            seg++;
             break;
-
+            }
+            
+            temp[i-((int)strlen(new_item.name))-1] = new_line.data[i];
+            break;
+        case 3:
+            if(new_line.data[i] == '\n' || new_line.data[i] == EOF){
+                printf("hithit\n");
+                new_item.price = atof(temp);
+                // dont need to clear array because we are done
+                seg++;
+                break;
+            }
+            temp[i-((int)strlen(new_item.name))-1-(int)limit-1] = new_line.data[i];
+            break;
         default:
             break;
         }
-
     }
+    new_item.price = atof(temp);
+
+
+    printf("price:%9.2f,quantity:%d,name:%s\n",new_item.price,new_item.quantity,new_item.name);
     return new_item;    
 
 }
@@ -106,13 +117,15 @@ line read_line() {
    new_line.last_line = FALSE;
 
    // check eof, if eof, set last line true, break, if just \n then break, else, add to string
-   for(int i = 0; i < (int)strlen(new_line.data); i++){
+   for(int i = 0; i < (int)sizeof(new_line.data); i++){
     char ch = getchar();
     if(ch == EOF){
         new_line.last_line = TRUE;
+        new_line.data[i] = '\0';
         break;
     }
     if(ch == '\n'){
+        new_line.data[i] = '\0';
         break;
     }
     else{
@@ -143,3 +156,56 @@ int main() {
 }
 
 // /usr/bin/gcc -fdiagnostics-color=always -g /home/Blake/Documents/BrockY3S1/IntroC/Hws/Labs/4Lab/*.c -o /home/Blake/Documents/BrockY3S1/IntroC/Hws/Labs/4Lab/checkout -Wall -Wextra < /home/Blake/Documents/BrockY3S1/IntroC/Hws/Labs/4Lab/order1.csv
+
+
+
+
+/*
+char tempp[NAME_LIMIT+1];
+    tempp[NAME_LIMIT+1] = '\0';
+    int segment = 0;
+    int namelen;
+    int quanlen;
+    for(int i = 0; i < (int)strlen(new_line.data); i++){
+        if(new_line.data[i] == ','){
+            if(segment == 0){
+                namelen = i;
+                strcpy(new_item.name, tempp);
+            }
+            else if(segment == 1){
+                quanlen = i-namelen-1;
+                new_item.quantity = atoi(tempp);
+            }
+            for(int i = 0; i < (int)sizeof(tempp)-1; i++){
+                tempp[i] = '\0';
+            }
+            segment++;
+            continue;
+        }
+        if(new_line.data[i] == '\n' || new_line.data[i] == EOF){
+            new_item.price = atof(tempp);
+            break;
+        }
+
+        switch (segment)
+        {
+        case 0:
+            tempp[i] = new_line.data[i];
+            break;
+        case 1:
+            tempp[i-namelen] = new_line.data[i];
+            break;
+        case 2:
+            tempp[i-namelen-quanlen] = new_line.data[i];
+            break;
+
+        default:
+            break;
+        }
+
+    }
+
+    grah
+
+
+*/
