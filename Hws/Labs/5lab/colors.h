@@ -12,6 +12,8 @@ Index 2 = Blue
 Index 3 = Alpha
 */
 typedef union {
+unsigned hex;
+unsigned char RGBA[5];
 
     
 

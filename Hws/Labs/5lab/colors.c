@@ -33,6 +33,7 @@ Sets the Red value in the union to the provided red value
 @return the modified union.
 */
 color set_red(color c, unsigned char red) {
+    
     return c;
 }
 
