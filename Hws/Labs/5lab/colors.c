@@ -6,6 +6,7 @@
 /*
 Prints the provided color in the following format:
 
+0xalpha,blue,green,red
 Hex: 0x11223344
 Red:   val
 Green: val
@@ -33,7 +34,6 @@ Sets the Red value in the union to the provided red value
 @return the modified union.
 */
 color set_red(color c, unsigned char red) {
-    
     return c;
 }
 
@@ -80,5 +80,8 @@ Hint: strtol(your_string_here, NULL, 16) can be used to get the hex value for th
 @param colors The array of collors to fill with values read in with getchar()
 */
 void read_colors(color colors[]) {
+    char tempstring[11];
+    // 
+    
     
 }
