@@ -54,6 +54,9 @@ item process_line(line new_line) {
         // if comma go from name -> quantity or quantity -> price
 
 
+
+
+        //the logic here is awful and i had to troubleshoot it im sorry
         switch (seg)
         {
         case 1:
