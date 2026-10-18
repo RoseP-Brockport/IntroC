@@ -3,6 +3,6 @@
 
 #define MAX_LINE (25)
 
-extern void read_in(/* FILL IN THE PARAMETERS */);
+extern void read_in(char* building, int* sensor, double* temp);
 
 #endif

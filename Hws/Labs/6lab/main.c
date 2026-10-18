@@ -12,7 +12,15 @@ This main function does the following sequence:
 4. Returns 0 for EXIT SUCCESS
 */
 int main() {
+    char building = '\0';
+    int sensor = -1;
+    double temp = -999.0;
 
+    read_in(&building, &sensor, &temp);
+    printf("Building %c Sensor %d Reports temperature of %.2f\n", building, sensor, temp);
+    if(building == '\0' || sensor == -1 || temp == -999.0){
+        return 1;
+    }
     return 0;
 
 }
