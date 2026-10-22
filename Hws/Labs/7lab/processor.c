@@ -17,6 +17,40 @@ You may not use Bracket Syntax to navigate the strings/arrays.
 @return a pointer to the start of the substring in text
 */
 char* find_substring(char *text, char *target) {
+
+    //if first char of target, check length of target and check if found, make sure not to go over index
+    char* tcpy = target;
+    char tfirst = *target;
+    char* texcpy = text;
+    int tlen = 0;
+    int texlen = 0;
+    while(*text != '\0'){
+        texcpy++;
+        texlen++;
+    }
+    while(*tcpy != '\0'){
+        tcpy++;
+        tlen++;
+    }
+
+    // mmm i dont wanan make sure im not outta bounds so we hit a lil trick callled lmao xd 
+    while(*(text+tlen) != '\0'){
+        if(*text == tfirst){
+            for(int i = 1; i <= tlen; i++){
+                if(*(target+i) == *(text+i)){
+                    if(i = tlen){
+                        return text;
+                    }
+                    continue;
+                }
+                else{break;}
+
+            }
+        }
+        text++;
+    }
+
+
     return NULL;
 }
 
@@ -36,6 +70,8 @@ You may not use Bracket Syntax to navigate the strings/arrays.
 @return a pointer to the start of the field data (after the equal sign)
 */
 char* find_field(char *text, char *field) {
+    // this is evil why would you make me do this :(
+    
 
     return NULL;
 
