@@ -80,8 +80,8 @@ char* find_field(char *text, char *field) {
     }
 
     
-
-    char* fieldMangled[flen+3];
+    char fileMangeler[flen+3];
+    char*fieldMangled = fileMangeler;
     *(fieldMangled+flen+2) = '\0';
     *(fieldMangled+flen+1) = '=';
     *fieldMangled = ';';
