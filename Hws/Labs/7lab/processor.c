@@ -38,7 +38,7 @@ char* find_substring(char *text, char *target) {
         if(*text == tfirst){
             for(int i = 1; i <= tlen; i++){
                 if(*(target+i) == *(text+i)){
-                    if(i = tlen){
+                    if(i == tlen){
                         return text;
                     }
                     continue;
@@ -72,8 +72,21 @@ You may not use Bracket Syntax to navigate the strings/arrays.
 char* find_field(char *text, char *field) {
     // this is evil why would you make me do this :(
     
+    char* fcpy = field;
+    int flen = 0;
+    while(*fcpy != '\0'){
+        fcpy++;
+        flen++;
+    }
 
-    return NULL;
+    
+
+    char* fieldMangled[flen+3];
+    *(fieldMangled+flen+2) = '\0';
+    *(fieldMangled+flen+1) = '=';
+    *fieldMangled = ';';
+    char* fieldstart = find_substring(text, fieldMangled);
+    return fieldstart+flen+2;
 
 }
 
@@ -87,6 +100,14 @@ You may not use Bracket Syntax to navigate the strings/arrays.
 */
 void terminate_field(char *text) {
     
+    while(*text != '\0'){
+        if(*text == ';'){
+            *text = '\0';
+        }
+        else{
+            text++;
+        }
+    }
     return;
 
 }
@@ -108,6 +129,59 @@ You may use bracket syntax for this function.
 */
 void process(char *data, char *fields[], char *results[], int c) {
 
-    return;
+    int cdones = 0;
+    if(c == 0){
+        return;
+    }
+    else{
+        while(c != 0){
+            
+            *(results+cdones) = find_field(data, *(fields+cdones));
+            
+            cdones++;
+            c--;
+        }
+        for(int i = 0; i <= cdones; i++){
+            terminate_field(*(results+i));
+        }
+
+
+
+    }
     
 }
+
+
+/*
+
+old one 
+
+
+
+char* find_field(char *text, char *field) {
+    // this is evil why would you make me do this :(
+    char* start = find_substring(text, field);
+
+
+    char* tcpy = field;
+    int tlen = 0;
+    
+    while(*tcpy != '\0'){
+        tcpy++;
+        tlen++;
+    }
+    //we need to go, we are not at beginning of string, + check before start is ; and after start is =
+    while(1){
+        if(start = text){
+            text++;
+            start = find_substring(text,field);
+            continue;
+        }
+        if(*(start-1) == ';' && *(start))
+    }
+
+    return NULL;
+
+}
+
+*/
