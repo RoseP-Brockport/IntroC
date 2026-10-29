@@ -1,0 +1,6 @@
+valgrind commands
+
+in same directory as compiled code
+
+valgrind --leak-check=full ./mycfile.out
+

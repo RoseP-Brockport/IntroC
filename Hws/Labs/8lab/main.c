@@ -32,10 +32,52 @@ void process() {
     int count = 0;
     int capacity = INITIAL_MAX;
     char temp_str[MAX_LINE + 1];
-    
+    // starter variables 2 electric boogaloo
+    char** log = create_logs;
+    const char* deletetemplate = "DELETE";
+    int wedone = 0;
+    // line always broken by \n or EOF as last
+    // each line max MAX_LINE long
 
-
-    return;
+    //put line in
+    while(1){
+        for(int i = 0; i < (MAX_LINE+1); i++){
+            char tempchar = getchar();
+            if(tempchar == '\n' || tempchar == 'EOF'){
+                temp_str[i] = '\0';
+                if(tempchar == 'EOF'){
+                    wedone = 1;
+                }
+                break;
+            }
+            else{
+                temp_str[i] = getchar();
+            }
+        }
+        //is it delete?
+        for(int i = 0; i< (6); i++){
+            if(deletetemplate[i] != temp_str[i]){
+                break;
+            }
+            if(i == 5){
+                delete_last_log(log, &count);
+                temp_str[0] = '\0';
+            }
+        }
+        //reset if we deleted
+        if(temp_str[0] == '\0'){
+            temp_str[0] == '0';
+            continue;
+        }
+        // add it
+        log = append_logs(log,&count,&capacity,temp_str);
+        // check if last was EOF
+        if(wedone == 1){
+            free_logs(log,&count);
+            return;
+        }
+        
+    }
 }
 
 int main() {

@@ -13,7 +13,8 @@ hold INITIAL_MAX char* should be allocated
 */
 char **create_logs() {
 
-    return NULL;
+    char** log = calloc(INITIAL_MAX, sizeof(char*));
+    return log;
 
 }
 
@@ -39,7 +40,17 @@ The count and capacity are updated as needed.
 */
 char **append_logs(char **logs, int *count, int *capacity, char *message) {
 
-    return NULL;
+    char** logcpy = logs;
+    if( (*capacity - *count) <= 0){
+        logs = realloc(logs, (sizeof(char*)*(*capacity*2)));
+        // if logs is null we are so fucked
+        printf("Capacity doubled from %d to %d\n", *capacity, (*capacity*2));
+        *capacity = *capacity*2;
+    }
+    logs[*count] = message;
+    *count = *count+1;
+
+    return logs;
 
 }
 
@@ -55,7 +66,15 @@ The count is updated as needed.
 */
 void delete_last_log(char **logs, int *count) {
 
-    return;
+    if(*count == 0){
+        printf("No entry to delete\n");
+        return;
+    }
+    else{
+        free(logs[*count-1]);
+        *count = *count-1;
+        return;
+    }
 
 }
 
@@ -67,6 +86,10 @@ This function frees all remaining messages and the logs array.
 */
 void free_logs(char** logs, int count) {
 
+    for(int i = 0; i < count; i++ ){
+        free(logs[count]);
+    }
+    free(logs);
     return;
 
 }
