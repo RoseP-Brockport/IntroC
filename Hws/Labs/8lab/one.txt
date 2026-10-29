@@ -1,0 +1,7 @@
+SYSTEM: Service started
+CONFIG: Settings loaded
+AUTH: Alice signed in
+DELETE
+CACHE: Entries refreshed
+REQUEST: GET /status completed
+SYSTEM: Service stopped

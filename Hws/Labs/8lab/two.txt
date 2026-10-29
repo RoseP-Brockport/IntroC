@@ -1,0 +1,11 @@
+DELETE
+DELETE
+SYSTEM: Service started
+DELETE
+DELETE
+AUTH: Login attempted
+AUTH: Login accepted
+DELETE
+DELETE
+DELETE
+SYSTEM: Still running

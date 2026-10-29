@@ -49,8 +49,6 @@ char* find_substring(char *text, char *target) {
         }
         text++;
     }
-
-
     return NULL;
 }
 

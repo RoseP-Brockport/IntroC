@@ -1,0 +1,12 @@
+SYSTEM: Starting application
+CONFIG: Loading configuration
+CONFIG: Configuration loaded
+NETWORK: Opening connection
+NETWORK: Connection established
+AUTH: Authenticating client
+AUTH: Client authenticated
+DATABASE: Starting transaction
+DATABASE: Reading records
+DATABASE: Writing updates
+DATABASE: Transaction committed
+SYSTEM: Request completed

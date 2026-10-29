@@ -1,0 +1,15 @@
+SESSION1: Connection opened
+SESSION1: Request received
+SESSION1: Request processed
+SESSION1: Response sent
+SESSION1: Connection closed
+DELETE
+DELETE
+DELETE
+DELETE
+DELETE
+SESSION2: Connection opened
+SESSION2: Request received
+SESSION2: Response sent
+DELETE
+SESSION2: Connection closed
