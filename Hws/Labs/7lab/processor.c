@@ -17,34 +17,29 @@ You may not use Bracket Syntax to navigate the strings/arrays.
 @return a pointer to the start of the substring in text
 */
 char* find_substring(char *text, char *target) {
-
-    //if first char of target, check length of target and check if found, make sure not to go over index
     char* tcpy = target;
-    char tfirst = *target;
     char* texcpy = text;
     int tlen = 0;
-    int texlen = 0;
-    while(*text != '\0'){
+
+    while (*texcpy != '\0') {
         texcpy++;
-        texlen++;
     }
-    while(*tcpy != '\0'){
+// we should explode my brain i think
+    while (*tcpy != '\0') {
         tcpy++;
         tlen++;
     }
-
-    // mmm i dont wanan make sure im not outta bounds so we hit a lil trick callled lmao xd 
-    while(*(text+tlen) != '\0'){
-        if(*text == tfirst){
-            for(int i = 1; i <= tlen; i++){
-                if(*(target+i) == *(text+i)){
-                    if(i == tlen){
-                        return text;
-                    }
-                    continue;
-                }
-                else{break;}
-
+    if (tlen == 0) {
+        return text;
+    }
+    while (*text != '\0') {
+        if (*text == *target) {
+            int i = 1;
+            while (i < tlen && *(text + i) != '\0' && *(target + i) == *(text + i)) {
+                i++;
+            }
+            if (i == tlen) {
+                return text;
             }
         }
         text++;
@@ -69,24 +64,27 @@ You may not use Bracket Syntax to navigate the strings/arrays.
 */
 char* find_field(char *text, char *field) {
     // this is evil why would you make me do this :(
-    
     char* fcpy = field;
     int flen = 0;
-    while(*fcpy != '\0'){
+
+    while (*fcpy != '\0') {
         fcpy++;
         flen++;
     }
-
-    
-    char fileMangeler[flen+3];
-    char*fieldMangled = fileMangeler;
-    *(fieldMangled+flen+2) = '\0';
-    *(fieldMangled+flen+1) = '=';
-    *fieldMangled = ';';
-    char* fieldstart = find_substring(text, fieldMangled);
-    return fieldstart+flen+2;
-
+    char fileMangeler[flen + 3];
+    char* fieldMangeler = fileMangeler;
+    *fieldMangeler = ';';
+    for (int i = 0; i < flen; i++) {
+        *(fieldMangeler + i + 1) = *(field + i);
+    }
+    *(fieldMangeler + flen + 1) = '=';
+    *(fieldMangeler + flen + 2) = '\0';
+    char* fieldstart = find_substring(text, fieldMangeler);
+    if (fieldstart != NULL) {
+        return fieldstart + flen + 2;
+    }
 }
+
 
 /*
 This function takes a string of text and replaces the first occurence of a
@@ -126,27 +124,21 @@ You may use bracket syntax for this function.
 @param c The number of fields being requested
 */
 void process(char *data, char *fields[], char *results[], int c) {
-
-    int cdones = 0;
-    if(c == 0){
+    if (c == 0) {
         return;
     }
-    else{
-        while(c != 0){
-            
-            *(results+cdones) = find_field(data, *(fields+cdones));
-            
-            cdones++;
-            c--;
-        }
-        for(int i = 0; i <= cdones; i++){
-            terminate_field(*(results+i));
-        }
-
-
-
+    int cdones = 0;
+    while (c != 0) {
+        *(results + cdones) = find_field(data, *(fields + cdones));
+        cdones++;
+        c--;
     }
-    
+
+    for (int i = 0; i < cdones; i++) {
+        if (*(results + i) != NULL) {
+            terminate_field(*(results + i));
+        }
+    }
 }
 
 

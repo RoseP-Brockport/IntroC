@@ -32,53 +32,71 @@ void process() {
     int count = 0;
     int capacity = INITIAL_MAX;
     char temp_str[MAX_LINE + 1];
-    // starter variables 2 electric boogaloo
-    char** log = create_logs;
+    int endflag = 0;
     const char* deletetemplate = "DELETE";
-    int wedone = 0;
-    // line always broken by \n or EOF as last
-    // each line max MAX_LINE long
+    char** logs = create_logs();
 
-    //put line in
+    // I will make this non a piece of shit I SWEAR by the heavens
+    /*
+    so, we need to getchar, lines of MAX_LINE+1 (max length + \n and or EOF)
+
+    when we get each line we need to check, in order
+
+    is it DELETE?
+    is it empty?
+    if neither append
+    print logs after each line
+
+    need to stop at \n and know to stop looping after EOF
+
+    then run free_logs
+    
+    */
+
+    //main logic loop
     while(1){
-        for(int i = 0; i < (MAX_LINE+1); i++){
-            char tempchar = getchar();
-            if(tempchar == '\n' || tempchar == 'EOF'){
-                temp_str[i] = '\0';
-                if(tempchar == 'EOF'){
-                    wedone = 1;
-                }
+
+        //read characters from redirect
+        for(int i = 0; i < MAX_LINE + 1; i++){
+            int staging = getchar();
+            if(staging == EOF){
+                printf("ending\n");
+                endflag = 1;
                 break;
             }
-            else{
-                temp_str[i] = getchar();
-            }
-        }
-        //is it delete?
-        for(int i = 0; i< (6); i++){
-            if(deletetemplate[i] != temp_str[i]){
+            temp_str[i] = staging;
+            
+            if(staging == '\n'){
                 break;
             }
-            if(i == 5){
-                delete_last_log(log, &count);
-                temp_str[0] = '\0';
+        }
+        if(!strcmp(temp_str,deletetemplate) && temp_str[0] != '\n' && temp_str[0] != 'EOF'){
+            logs = append_logs(logs,&count,&capacity,temp_str);
+        }
+        else if(temp_str[0] == '\n'){
+            if(endflag == 0){
+                continue;
             }
         }
-        //reset if we deleted
-        if(temp_str[0] == '\0'){
-            temp_str[0] == '0';
-            continue;
+        else if(strcmp(temp_str,deletetemplate)){
+            delete_last_log(logs,&count);
+            
         }
-        // add it
-        log = append_logs(log,&count,&capacity,temp_str);
-        // check if last was EOF
-        if(wedone == 1){
-            free_logs(log,&count);
-            return;
+        
+        printf("%s",temp_str);
+
+        if(endflag == 1){
+            break;
         }
         
     }
+    free_logs(logs,count);
+    return;
+
+
 }
+
+
 
 int main() {
 

@@ -72,7 +72,7 @@ void delete_last_log(char **logs, int *count) {
     }
     else{
         free(logs[*count-1]);
-        *count = *count-1;
+        (*count)--;
         return;
     }
 
@@ -87,7 +87,7 @@ This function frees all remaining messages and the logs array.
 void free_logs(char** logs, int count) {
 
     for(int i = 0; i < count; i++ ){
-        free(logs[count]);
+        free(logs[i]);
     }
     free(logs);
     return;
