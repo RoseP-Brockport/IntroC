@@ -1,0 +1,40 @@
+root@0ab523dc82ec:/workspace/Projects/project_219_26FA/finished# make test_program
+gcc -Wall -Wextra -std=c11 -g -c inventory.c
+gcc -Wall -Wextra -std=c11 -g -c recipes.c
+gcc -Wall -Wextra -std=c11 -g -c crafting.c
+gcc -Wall -Wextra -std=c11 -g -c parser.c
+gcc -Wall -Wextra -std=c11 -g -c autocraft.c
+gcc -Wall -Wextra -std=c11 -g -c main.c
+gcc -Wall -Wextra -std=c11 -g -o rpgcraft inventory.o recipes.o crafting.o parser.o autocraft.o main.o
+gcc -Wall -Wextra -std=c11 -g -o tests/check_output tests/check_output.c
+mkdir -p tests/results
+./rpgcraft < tests/program_cases/01_basic.in > tests/results/01_basic.out
+./tests/check_output tests/results/01_basic.out tests/program_cases/01_basic.checks
+PASS: tests/results/01_basic.out
+./rpgcraft < tests/program_cases/02_resize.in > tests/results/02_resize.out
+./tests/check_output tests/results/02_resize.out tests/program_cases/02_resize.checks
+PASS: tests/results/02_resize.out
+./rpgcraft < tests/program_cases/03_collisions.in > tests/results/03_collisions.out
+./tests/check_output tests/results/03_collisions.out tests/program_cases/03_collisions.checks
+PASS: tests/results/03_collisions.out
+./rpgcraft < tests/program_cases/04_crafting.in > tests/results/04_crafting.out
+./tests/check_output tests/results/04_crafting.out tests/program_cases/04_crafting.checks
+PASS: tests/results/04_crafting.out
+./rpgcraft < tests/program_cases/05_failures.in > tests/results/05_failures.out
+./tests/check_output tests/results/05_failures.out tests/program_cases/05_failures.checks
+PASS: tests/results/05_failures.out
+./rpgcraft < tests/program_cases/06_invalid_input.in > tests/results/06_invalid_input.out
+./tests/check_output tests/results/06_invalid_input.out tests/program_cases/06_invalid_input.checks
+PASS: tests/results/06_invalid_input.out
+./rpgcraft < tests/program_cases/07_eof.in > tests/results/07_eof.out
+./tests/check_output tests/results/07_eof.out tests/program_cases/07_eof.checks
+PASS: tests/results/07_eof.out
+./rpgcraft < tests/program_cases/08_inventory.in > tests/results/08_inventory.out
+./tests/check_output tests/results/08_inventory.out tests/program_cases/08_inventory.checks
+PASS: tests/results/08_inventory.out
+./rpgcraft < tests/program_cases/09_many_items.in > tests/results/09_many_items.out
+./tests/check_output tests/results/09_many_items.out tests/program_cases/09_many_items.checks
+PASS: tests/results/09_many_items.out
+./rpgcraft < tests/program_cases/12_same_hash.in > tests/results/12_same_hash.out
+./tests/check_output tests/results/12_same_hash.out tests/program_cases/12_same_hash.checks
+PASS: tests/results/12_same_hash.out

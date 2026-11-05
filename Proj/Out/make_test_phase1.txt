@@ -1,0 +1,10 @@
+root@0ab523dc82ec:/workspace/Projects/project_219_26FA/finished# make test_phase1
+gcc -Wall -Wextra -std=c11 -g -c inventory.c
+gcc -Wall -Wextra -std=c11 -g -I. -o tests/test_phase1 tests/test_phase1.c inventory.o
+./tests/test_phase1
+Phase 1: hash function
+Phase 1: create the inventory
+Phase 1: add three items (different buckets)
+Phase 1: update an existing item
+Phase 1: make an independent copy of the name
+PASS: Phase 1

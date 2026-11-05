@@ -1,0 +1,11 @@
+# Additive hash: ab and ba have the same hash but are different keys.
+Collected 2 ab.
+Collected 5 ba.
+ab: 2
+ba: 5
+Used 2 ab.
+ab: 0
+Discarded ba.
+ba: 0
+Distinct entries: 0 | Buckets: 5
+Goodbye, adventurer!

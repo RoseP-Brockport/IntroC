@@ -1,0 +1,30 @@
+root@0ab523dc82ec:/workspace/Projects/project_219_26FA/finished# make test_phases
+gcc -Wall -Wextra -std=c11 -g -c inventory.c
+gcc -Wall -Wextra -std=c11 -g -I. -o tests/test_phase1 tests/test_phase1.c inventory.o
+./tests/test_phase1
+Phase 1: hash function
+Phase 1: create the inventory
+Phase 1: add three items (different buckets)
+Phase 1: update an existing item
+Phase 1: make an independent copy of the name
+PASS: Phase 1
+gcc -Wall -Wextra -std=c11 -g -I. -o tests/test_phase2 tests/test_phase2.c inventory.o
+./tests/test_phase2
+Phase 2: linked-list collisions
+Phase 2: delete from the middle, head, and tail
+Phase 2: two different strings with the SAME hash
+Phase 2: consume quantities and remove empty items
+Phase 2: automatic growth at 4 and 9 distinct items
+PASS: Phase 2
+gcc -Wall -Wextra -std=c11 -g -c crafting.c
+gcc -Wall -Wextra -std=c11 -g -c recipes.c
+gcc -Wall -Wextra -std=c11 -g -I. -o tests/test_phase3 tests/test_phase3.c inventory.o crafting.o recipes.o
+./tests/test_phase3
+Phase 3: craft a healing potion
+Phase 3: craft again and remove exhausted ingredients
+Phase 3: failed crafting does not change anything
+Phase 3: craft an item from other crafted items
+Phase 3: print inventory (visual check)
+healing_potion: 1
+elixir: 1
+PASS: Phase 3

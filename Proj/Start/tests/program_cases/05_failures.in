@@ -1,0 +1,12 @@
+gather herb 3
+gather water 1
+craft healing_potion
+craft healing_potion
+find herb
+find healing_potion
+use herb 2
+find herb
+discard missing
+craft fake_recipe
+craft mana_potion
+quit

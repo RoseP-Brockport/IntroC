@@ -1,0 +1,30 @@
+root@0ab523dc82ec:/workspace/Projects/project_219_26FA/finished# make test_components
+gcc -Wall -Wextra -std=c11 -g -c inventory.c
+gcc -Wall -Wextra -std=c11 -g -I. -o tests/test_inventory_full tests/test_inventory_full.c inventory.o
+./tests/test_inventory_full
+Inventory: empty map and hash function
+Inventory: copied strings and quantity changes
+Inventory: collision chain and deletion positions
+Inventory: distinct keys with identical complete hash values
+Inventory: resize at 4, 9, 18 and 36 items
+Inventory: every node is in its correct bucket
+Inventory: remove all items without shrinking
+Inventory is empty.
+PASS: inventory component
+gcc -Wall -Wextra -std=c11 -g -c recipes.c
+gcc -Wall -Wextra -std=c11 -g -I. -o tests/test_recipes_full tests/test_recipes_full.c recipes.o
+./tests/test_recipes_full
+PASS: recipes component
+gcc -Wall -Wextra -std=c11 -g -c crafting.c
+gcc -Wall -Wextra -std=c11 -g -I. -o tests/test_crafting_full tests/test_crafting_full.c inventory.o crafting.o recipes.o
+./tests/test_crafting_full
+Crafting: unknown recipe and insufficient materials
+Crafting: all six recipes with exactly enough ingredients
+Crafting: failed recipe does not consume any ingredients
+Crafting: multi-step manual crafting and resizing
+Crafting: a new output can trigger resizing
+PASS: crafting component
+gcc -Wall -Wextra -std=c11 -g -c parser.c
+gcc -Wall -Wextra -std=c11 -g -I. -o tests/test_parser_full tests/test_parser_full.c parser.o
+./tests/test_parser_full
+PASS: parser component

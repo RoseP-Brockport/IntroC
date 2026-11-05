@@ -1,0 +1,7 @@
+gather herb 0
+gather Herb 2
+find
+notacommand
+gather herb 2 extra
+stats
+quit

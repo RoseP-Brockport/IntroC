@@ -1,0 +1,10 @@
+root@0ab523dc82ec:/workspace/Projects/project_219_26FA/finished# make test_phase2
+gcc -Wall -Wextra -std=c11 -g -c inventory.c
+gcc -Wall -Wextra -std=c11 -g -I. -o tests/test_phase2 tests/test_phase2.c inventory.o
+./tests/test_phase2
+Phase 2: linked-list collisions
+Phase 2: delete from the middle, head, and tail
+Phase 2: two different strings with the SAME hash
+Phase 2: consume quantities and remove empty items
+Phase 2: automatic growth at 4 and 9 distinct items
+PASS: Phase 2

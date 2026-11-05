@@ -1,0 +1,38 @@
+gather a 1
+gather b 2
+gather c 3
+gather d 4
+gather e 5
+gather f 6
+gather g 7
+gather h 8
+gather i 9
+gather j 10
+gather k 11
+gather l 12
+gather m 13
+gather n 14
+gather o 15
+gather p 16
+gather q 17
+gather r 18
+gather s 19
+gather t 20
+gather u 21
+gather v 22
+gather w 23
+gather x 24
+gather y 25
+gather z 26
+gather aa 27
+gather ab 28
+gather ac 29
+gather ad 30
+stats
+find a
+find z
+find ad
+discard a
+find a
+stats
+quit

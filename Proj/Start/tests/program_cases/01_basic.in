@@ -1,0 +1,6 @@
+gather herb 5
+gather water 3
+find herb
+find water
+stats
+quit

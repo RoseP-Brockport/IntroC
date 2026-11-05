@@ -31,7 +31,7 @@ void process() {
     // Starter Variables to help you begin
     int count = 0;
     int capacity = INITIAL_MAX;
-    char temp_str[MAX_LINE + 1];
+    char temp_str[MAX_LINE + 2];
     int endflag = 0;
     const char* deletetemplate = "DELETE";
     char** logs = create_logs();
@@ -54,9 +54,35 @@ void process() {
     */
 
     //main logic loop
-    while(1){
+
+    //read characters from redirect
+        temp_str[MAX_LINE+1] = '\0';
+        for(int i = 0; i < MAX_LINE + 1; i++){
+            int staging = getchar();
+            if(staging == EOF){
+                printf("ending\n");
+                endflag = 1;
+                break;
+            }
+}
+
+
+
+int main() {
+
+    process();
+    return 0;
+
+}
+
+
+
+/* 
+
+   while(1){
 
         //read characters from redirect
+        temp_str[MAX_LINE+1] = '\0';
         for(int i = 0; i < MAX_LINE + 1; i++){
             int staging = getchar();
             if(staging == EOF){
@@ -70,7 +96,7 @@ void process() {
                 break;
             }
         }
-        if(!strcmp(temp_str,deletetemplate) && temp_str[0] != '\n' && temp_str[0] != 'EOF'){
+        if(strcmp(temp_str,deletetemplate)==0 && temp_str[0] != '\n' && temp_str[0] != EOF){
             logs = append_logs(logs,&count,&capacity,temp_str);
         }
         else if(temp_str[0] == '\n'){
@@ -94,13 +120,5 @@ void process() {
     return;
 
 
-}
 
-
-
-int main() {
-
-    process();
-    return 0;
-
-}
+    */

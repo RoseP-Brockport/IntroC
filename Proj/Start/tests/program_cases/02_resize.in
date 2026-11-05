@@ -1,0 +1,17 @@
+gather a 1
+gather b 2
+gather c 3
+stats
+gather d 4
+stats
+gather e 5
+gather f 6
+gather g 7
+gather h 8
+stats
+gather i 9
+stats
+find a
+find d
+find i
+quit

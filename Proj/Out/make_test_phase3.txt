@@ -1,0 +1,14 @@
+root@0ab523dc82ec:/workspace/Projects/project_219_26FA/finished# make test_phase3
+gcc -Wall -Wextra -std=c11 -g -c inventory.c
+gcc -Wall -Wextra -std=c11 -g -c crafting.c
+gcc -Wall -Wextra -std=c11 -g -c recipes.c
+gcc -Wall -Wextra -std=c11 -g -I. -o tests/test_phase3 tests/test_phase3.c inventory.o crafting.o recipes.o
+./tests/test_phase3
+Phase 3: craft a healing potion
+Phase 3: craft again and remove exhausted ingredients
+Phase 3: failed crafting does not change anything
+Phase 3: craft an item from other crafted items
+Phase 3: print inventory (visual check)
+healing_potion: 1
+elixir: 1
+PASS: Phase 3

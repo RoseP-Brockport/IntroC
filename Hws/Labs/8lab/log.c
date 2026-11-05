@@ -41,7 +41,7 @@ The count and capacity are updated as needed.
 char **append_logs(char **logs, int *count, int *capacity, char *message) {
 
     char** logcpy = logs;
-    if( (*capacity - *count) <= 0){
+    if(*capacity <= *count){
         logs = realloc(logs, (sizeof(char*)*(*capacity*2)));
         // if logs is null we are so fucked
         printf("Capacity doubled from %d to %d\n", *capacity, (*capacity*2));

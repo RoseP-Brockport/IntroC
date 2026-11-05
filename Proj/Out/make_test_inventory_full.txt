@@ -1,0 +1,12 @@
+root@0ab523dc82ec:/workspace/Projects/project_219_26FA/finished# make test_inventory_full
+gcc -Wall -Wextra -std=c11 -g -I. -o tests/test_inventory_full tests/test_inventory_full.c inventory.o
+./tests/test_inventory_full
+Inventory: empty map and hash function
+Inventory: copied strings and quantity changes
+Inventory: collision chain and deletion positions
+Inventory: distinct keys with identical complete hash values
+Inventory: resize at 4, 9, 18 and 36 items
+Inventory: every node is in its correct bucket
+Inventory: remove all items without shrinking
+Inventory is empty.
+PASS: inventory component

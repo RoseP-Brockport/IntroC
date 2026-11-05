@@ -1,0 +1,11 @@
+gather a 1
+gather f 2
+gather k 3
+find f
+discard f
+find f
+find k
+use a 1
+find a
+stats
+quit

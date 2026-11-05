@@ -1,0 +1,8 @@
+Crafted healing_potion!
+Cannot craft healing_potion:
+herb: 1
+healing_potion: 1
+Cannot use herb:
+Cannot discard missing:
+Unknown recipe: fake_recipe.
+Cannot craft mana_potion:

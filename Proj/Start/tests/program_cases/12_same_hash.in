@@ -1,0 +1,11 @@
+gather ab 2
+gather ba 5
+find ab
+find ba
+use ab 2
+find ab
+find ba
+discard ba
+find ba
+stats
+quit

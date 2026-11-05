@@ -1,0 +1,13 @@
+gather herb 4
+gather water 5
+gather crystal 2
+gather gold 1
+autocraft greater_elixir
+find herb
+find water
+find crystal
+find gold
+find elixir
+find greater_elixir
+stats
+quit

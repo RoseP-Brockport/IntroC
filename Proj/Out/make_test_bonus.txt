@@ -1,0 +1,24 @@
+gcc -Wall -Wextra -std=c11 -g -c inventory.c
+gcc -Wall -Wextra -std=c11 -g -c recipes.c
+gcc -Wall -Wextra -std=c11 -g -c crafting.c
+gcc -Wall -Wextra -std=c11 -g -c autocraft.c
+gcc -Wall -Wextra -std=c11 -g -I. -o tests/test_autocraft_full tests/test_autocraft_full.c inventory.o recipes.o crafting.o autocraft.o
+./tests/test_autocraft_full
+Bonus: unknown items cannot be autocrafted
+Bonus: simple automatic recipe
+Bonus: craft several layers of intermediate items
+Bonus: use intermediate items already in inventory
+Bonus: existing final product must be increased
+Bonus: missing ingredients must not modify inventory
+PASS: bonus component
+gcc -Wall -Wextra -std=c11 -g -c parser.c
+gcc -Wall -Wextra -std=c11 -g -c main.c
+gcc -Wall -Wextra -std=c11 -g -o rpgcraft inventory.o recipes.o crafting.o parser.o autocraft.o main.o
+gcc -Wall -Wextra -std=c11 -g -o tests/check_output tests/check_output.c
+mkdir -p tests/results
+./rpgcraft < tests/program_cases/10_bonus_success.in > tests/results/10_bonus_success.out
+./tests/check_output tests/results/10_bonus_success.out tests/program_cases/10_bonus_success.checks
+PASS: tests/results/10_bonus_success.out
+./rpgcraft < tests/program_cases/11_bonus_rollback.in > tests/results/11_bonus_rollback.out
+./tests/check_output tests/results/11_bonus_rollback.out tests/program_cases/11_bonus_rollback.checks
+PASS: tests/results/11_bonus_rollback.out
