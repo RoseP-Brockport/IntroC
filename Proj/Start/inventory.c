@@ -39,7 +39,7 @@ for example, "Hello" would hash with
 long long unsigned int hash_key(const char* key) {
 
     int hash = 0;
-    while(key != '\0'){
+    while(*key != '\0'){
         hash += *key;
         key++;
     }
@@ -81,7 +81,13 @@ If the item is not found, 0 is returned.
 */
 int inventory_get_quantity(Inventory* inv, const char* name) {
     
-    return inv->buckets[hash_key(name)]->quantity;
+    Item* item = inv->buckets[hash_key(name)];
+    if(item != NULL){
+        return item->quantity;
+    }
+    else{
+        return 0;
+    }
 }
 
 /*
@@ -113,12 +119,14 @@ void inventory_add(Inventory* inv, const char* name, int quantity) {
     if(inv->buckets[hash_key(name)] == NULL){
         Item* newItem = (Item*)calloc(1, sizeof(Item));
         newItem->name = calloc(strlen(name), sizeof(char));
-        newItem->quantity = 1;
+        strcpy(newItem->name, name);
+        newItem->quantity = quantity;
         newItem->next = NULL;
         inv->buckets[hash_key(name)] = newItem;
+        inv->size++;
     }
     else{
-        inv->buckets[hash_key(name)]->quantity ++;
+        inv->buckets[hash_key(name)]->quantity += quantity;
     }
 }
 
