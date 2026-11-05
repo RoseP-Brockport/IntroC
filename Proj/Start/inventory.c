@@ -12,8 +12,16 @@ Sets size to 0 and capacity to INITIAL_BUCKETS
 @return a pointer to a new allocated and configured inventory
 */
 Inventory* inventory_create(void) {
-    // TODO: Phase 1
-    return NULL;
+    
+
+    //inventory has buckets, size, capacity
+    Inventory* inventory = calloc(1, sizeof(Inventory));
+    Item** buckets = calloc(INITIAL_BUCKETS, sizeof(Item*));
+    inventory->buckets = buckets;
+    inventory->size = 0;
+    inventory->capacity = INITIAL_BUCKETS;
+
+    return inventory;
 }
 
 /*
@@ -29,9 +37,13 @@ for example, "Hello" would hash with
 @return the hash digest (sum of all ascii values)
 */
 long long unsigned int hash_key(const char* key) {
-    // TODO: Phase 1
-    (void)key;
-    return 0;
+
+    int hash = 0;
+    while(key != '\0'){
+        hash += *key;
+        key++;
+    }
+    return hash;
 }
 
 /*
@@ -52,10 +64,10 @@ the item
 @return a pointer to the desired item
 */
 Item* inventory_find(Inventory* inv, const char* name) {
-    // TODO: Phase 1; expand to handle collision chains in Phase 2
-    (void)inv;
-    (void)name;
-    return NULL;
+    // TODO: expand to handle collision chains in Phase 2
+
+    return inv->buckets[hash_key(name)];
+
 }
 
 /*
@@ -68,10 +80,8 @@ If the item is not found, 0 is returned.
 @return the integer quantity of the item in the inventory
 */
 int inventory_get_quantity(Inventory* inv, const char* name) {
-    // TODO: Phase 1
-    (void)inv;
-    (void)name;
-    return 0;
+    
+    return inv->buckets[hash_key(name)]->quantity;
 }
 
 /*
@@ -98,10 +108,18 @@ the proper place to add the pointer.
 @param quantity The amount to increase the quantity by
 */
 void inventory_add(Inventory* inv, const char* name, int quantity) {
-    // TODO: Phase 1; extend for collisions/resizing in Phase 2
-    (void)inv;
-    (void)name;
-    (void)quantity;
+    // TODO: extend for collisions/resizing in Phase 2
+    
+    if(inv->buckets[hash_key(name)] == NULL){
+        Item* newItem = (Item*)calloc(1, sizeof(Item));
+        newItem->name = calloc(strlen(name), sizeof(char));
+        newItem->quantity = 1;
+        newItem->next = NULL;
+        inv->buckets[hash_key(name)] = newItem;
+    }
+    else{
+        inv->buckets[hash_key(name)]->quantity ++;
+    }
 }
 
 
