@@ -38,7 +38,7 @@ void process() {
 
     // I will make this non a piece of shit I SWEAR by the heavens
     /*
-    so, we need to getchar, lines of MAX_LINE+1 (max length + \n and or EOF)
+    so, we need to getchar, lines of MAX_LINE+2 (max length + \n and or EOF + '\0')
 
     when we get each line we need to check, in order
 
@@ -55,14 +55,42 @@ void process() {
 
     //main logic loop
 
-    //read characters from redirect
+        // null terminate end of string
         temp_str[MAX_LINE+1] = '\0';
-        for(int i = 0; i < MAX_LINE + 1; i++){
-            int staging = getchar();
-            if(staging == EOF){
-                printf("ending\n");
-                endflag = 1;
-                break;
+
+        //read characters from redirect
+        while(endflag != 1){
+
+            for(int i = 0; i < MAX_LINE + 1; i++){
+                int staging = getchar();
+                if(staging == EOF){
+                    printf("ending\n");
+                    temp_str[i] = staging;
+                    endflag = 1;
+                    break;
+                }
+                else if(staging == '\n'){
+                    temp_str[i] = staging;
+                    break;
+                }
+                else{
+                    temp_str[i] = staging;
+                }
+            }
+            // done getting this line
+            // logic from here is as follows
+            // if index [0] == EOF or == '\n', it is an empty string, therefore do nothing and continue if '\n' or end if EOF
+            if(temp_str[0] == EOF || temp_str[0] == '\n'){
+                // can just continue even if EOF, because if empty EOF, then endflag will be set and while loop will break
+                continue;
+            }
+            // check if it is delete
+            char deleteTemplate[5] = "DELETE";
+            int isDelete = 0;
+            for(int i = 0; i < 6; i++){
+                if(deleteTemplate[i] != temp_str[i]){
+
+                }
             }
         }
 }

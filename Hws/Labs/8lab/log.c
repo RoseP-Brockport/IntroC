@@ -47,6 +47,7 @@ char **append_logs(char **logs, int *count, int *capacity, char *message) {
         printf("Capacity doubled from %d to %d\n", *capacity, (*capacity*2));
         *capacity = *capacity*2;
     }
+    
     logs[*count] = message;
     *count = *count+1;
 
