@@ -93,3 +93,5 @@ void free_logs(char** logs, int count) {
     return;
 
 }
+
+// test
