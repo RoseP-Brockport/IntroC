@@ -86,11 +86,19 @@ void process() {
             }
             // check if it is delete
             char deleteTemplate[5] = "DELETE";
-            int isDelete = 0;
+            int isDelete = 1;
             for(int i = 0; i < 6; i++){
                 if(deleteTemplate[i] != temp_str[i]){
-
+                    isDelete = 0;
                 }
+            }
+            if(isDelete == 1){
+                delete_last_log(logs, &count);
+            } 
+            // if empty continued, if delete then delete = 1
+            // so if to appen can just check if we are not delete
+            if(isDelete != 1){
+                append_logs(logs, &count, &capacity, temp_str);
             }
         }
 }
