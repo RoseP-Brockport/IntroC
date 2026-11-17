@@ -38,7 +38,7 @@ for example, "Hello" would hash with
 */
 long long unsigned int hash_key(const char* key) {
 
-    int hash = 0;
+    unsigned long long int hash = 0;
     while(*key != '\0'){
         hash += *key;
         key++;
@@ -68,7 +68,7 @@ Item* inventory_find(Inventory* inv, const char* name) {
 
     // if is found no collison
     while(1){
-        Item* item = inv->buckets[hash_key(name)];
+        Item* item = inv->buckets[hash_key(name)%inv->capacity];
         if(strcmp(item->name, name)){
             return item;
         }
@@ -94,7 +94,7 @@ If the item is not found, 0 is returned.
 */
 int inventory_get_quantity(Inventory* inv, const char* name) {
     
-    Item* item = inv->buckets[hash_key(name)];
+    Item* item = inv->buckets[hash_key(name)%inv->capacity];
     if(item != NULL){
         return item->quantity;
     }
@@ -131,30 +131,32 @@ void inventory_add(Inventory* inv, const char* name, int quantity) {
 
     // NEW: If adding a new element to the hash map would make entries/capacity > 0.75, call resize, resize should be performed before attempting to add entry.
     
-    if((inv->capacity/inv->size) > 0.75){
-        inventory_resize(inv);
+    if(inv->size != 0){
+        if((double)(inv->size/ inv->capacity) > 0.75){
+            inventory_resize(inv);
+        }
     }
 
-    if(inv->buckets[hash_key(name)] == NULL){
+    if(inv->buckets[hash_key(name)%inv->capacity] == NULL){
         Item* newItem = (Item*)calloc(1, sizeof(Item));
-        newItem->name = calloc(strlen(name), sizeof(char));
+        newItem->name = calloc(strlen(name)+1, sizeof(char));
         strcpy(newItem->name, name);
         newItem->quantity = quantity;
         newItem->next = NULL;
-        inv->buckets[hash_key(name)] = newItem;
+        inv->buckets[hash_key(name)%inv->capacity] = newItem;
         inv->size++;
     }
     else{
-        Item* search = inv->buckets[hash_key(name)];
+        Item* search = inv->buckets[hash_key(name)%inv->capacity];
         while(1){
            
-            if(strcmp(search->name, name)){
+            if(strcmp(search->name, name) == 0){
                 search->quantity += quantity;
                 break;
             }
             else if(search->next == NULL){
                 Item* newItem = (Item*)calloc(1, sizeof(Item));
-                newItem->name = calloc(strlen(name), sizeof(char));
+                newItem->name = calloc(strlen(name)+1, sizeof(char));
                 strcpy(newItem->name, name);
                 newItem->quantity = quantity;
                 newItem->next = NULL;
@@ -236,6 +238,8 @@ Notes:
 */
 void inventory_resize(Inventory* inv) {
     // TODO: Phase 2
+    // todo, e.g. "AAAAAAAAA"
+    // if our hash collisions are handled by making it a linked list, then uh, dont we not need to increase the size of the hashmap?
     
     (void)inv;
 }
