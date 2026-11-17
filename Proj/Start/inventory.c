@@ -234,11 +234,13 @@ int inventory_remove(Inventory* inv, const char* name) {
             if(strcmp(inv->buckets[hash_key(name)%inv->capacity]->name, name) == 0){
                 inv->buckets[hash_key(name)%inv->capacity] = current->next;
                 free(current);
+                inv->size -= 1;
                 return 1;
             }
             else{
                 prev->next = current->next;
                 free(current);
+                inv->size -= 1;
                 return 1;
             }
         }
