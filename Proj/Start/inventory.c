@@ -127,8 +127,10 @@ void inventory_add(Inventory* inv, const char* name, int quantity) {
     // NEW: If adding a new element to the hash map would make entries/capacity > 0.75, call resize, resize should be performed before attempting to add entry.
     
     if(inv->size != 0){
-        if((double)(inv->size/ inv->capacity) > 0.75){
-            inventory_resize(inv);
+        if(inventory_find(inv, name) == NULL){
+            if(((double)inv->size/ (double)inv->capacity) >= 0.75){
+                inventory_resize(inv);
+            }
         }
     }
 
