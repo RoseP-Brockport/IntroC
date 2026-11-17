@@ -239,9 +239,83 @@ Notes:
 void inventory_resize(Inventory* inv) {
     // TODO: Phase 2
     // todo, e.g. "AAAAAAAAA"
-    // if our hash collisions are handled by making it a linked list, then uh, dont we not need to increase the size of the hashmap?
+    // if our hash collisions are handled by making it a linked list, then uh, dont we not need to increase the size of the hashmap?,
+    // i blindly followed implementation, i fixed this by adding %inv->capacity
+
+    //this is called when we know we have to resize, 
+    // to make this easy, iterate through the inventory and add all elements to a stack,
+    // then pop elements off the top and add them to the new buckets?
+    // good first plan ig sure
+    Item** newBuckets = calloc((inv->capacity*2)+1, sizeof(Item));
+    // order of what is in the linked list for a collision doesnt matter i think, therefore,  can just make a linked list out of everything and then add it to new one ig?
+    // have to do this and not just transplant the existing linked lists because for x%z = y%z , x%a doesnt have to = y%a. 
+    // i am gonna iterate on the current list and connect everything together i think
+
+    // pseudo
+    // iterate over buckets, if current bucket not null, connect previous non empty bucket item.next to point to this item
+    int i = 0;
+    Item* listOne;
+    Item* prev;
+    for(i = 0; i < inv->size; i++){
+        if(inv->buckets[i] != NULL){
+            Item* temp = inv->buckets[i];
+            while(1){
+                if(temp->next != NULL){
+                    temp = temp->next;
+                }
+                else{
+                    listOne = temp;
+                    break;
+                }
+            }
+            i++;
+            break;
+        }
+    }
+    prev = listOne;
+
+    for(int i = 1; i < inv->size; i++){
+        if(inv->buckets[i] != NULL){
+            prev->next = inv->buckets[i];
+            while(1){
+                if(inv->buckets[i]->next != NULL){
+                    inv->buckets[i] = inv->buckets[i]->next;
+                }
+                else{
+                    prev = inv->buckets[i];
+                    break;
+                }
+
+            }
+        }
+    }
+    // we should now have a linked list of every object in this inventory,,, with listOne being the first item at the start
+    // i should be executed for whatever this code is ngl, idk why, it feels, dirty, impure even.
+
+    // this feels cursed but i no longer need this
+    free(inv->buckets);
+    inv->buckets = newBuckets;
     
-    (void)inv;
+    // prev will be copy of list to free it, i realize now that since i am using .next to connect everything, i either need to work around that, or make new items to put into the buckets
+    prev = listOne;
+    inv->size = 0;
+    while(prev->next != NULL){
+        
+        inventory_add(inv, listOne->name, listOne->quantity);
+        prev = prev->next;
+    }
+
+    // ts genuinely so fucked
+
+    // now freeing all old items...
+    while(listOne->next != NULL){
+        prev = listOne->next;
+        free(listOne);
+        listOne = prev;
+    }
+    
+    // this was actually horrific i am sorry to myself
+    
 }
 
 
