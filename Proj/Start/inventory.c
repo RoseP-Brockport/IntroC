@@ -196,10 +196,18 @@ from the inventory.
 */
 int inventory_consume(Inventory* inv, const char* name, int quantity) {
     // TODO: Phase 2
-    (void)inv;
-    (void)name;
-    (void)quantity;
-    return 0;
+    
+    if(inventory_find(inv, name) == NULL){
+        return 0;
+    }
+    if (inventory_find(inv, name)->quantity > 1){
+        inventory_find(inv, name)->quantity -= 1;
+        return 1;
+    }
+    else{
+        inventory_remove(inv, name);
+        return 1;
+    }
 }
 
 /*
