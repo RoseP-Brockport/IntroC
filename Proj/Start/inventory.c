@@ -115,7 +115,13 @@ the proper place to add the pointer.
 */
 void inventory_add(Inventory* inv, const char* name, int quantity) {
     // TODO: extend for collisions/resizing in Phase 2
+
+    // NEW: If adding a new element to the hash map would make entries/capacity > 0.75, call resize, resize should be performed before attempting to add entry.
     
+    if((inv->capacity/inv->size) > 0.75){
+        inventory_resize(inv);
+    }
+
     if(inv->buckets[hash_key(name)] == NULL){
         Item* newItem = (Item*)calloc(1, sizeof(Item));
         newItem->name = calloc(strlen(name), sizeof(char));
@@ -126,8 +132,35 @@ void inventory_add(Inventory* inv, const char* name, int quantity) {
         inv->size++;
     }
     else{
-        inv->buckets[hash_key(name)]->quantity += quantity;
+        Item* search = inv->buckets[hash_key(name)];
+        while(1){
+           
+            if(strcmp(search->name, name)){
+                search->quantity += quantity;
+                break;
+            }
+            else if(search->next == NULL){
+                Item* newItem = (Item*)calloc(1, sizeof(Item));
+                newItem->name = calloc(strlen(name), sizeof(char));
+                strcpy(newItem->name, name);
+                newItem->quantity = quantity;
+                newItem->next = NULL;
+                search->next = newItem;
+                inv->size++;
+                break;
+            }
+            else{
+                search = search->next;
+            }
+        }
+        
+        
+        //inv->buckets[hash_key(name)]->quantity += quantity;
     }
+
+    // check if current->name == name,
+    // if not, go to current->next, then check again, until found or current->next == null,
+    // if hit current->next == null, then make new item for this
 }
 
 
@@ -190,6 +223,7 @@ Notes:
 */
 void inventory_resize(Inventory* inv) {
     // TODO: Phase 2
+    
     (void)inv;
 }
 
