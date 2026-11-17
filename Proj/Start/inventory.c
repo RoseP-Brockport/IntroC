@@ -89,19 +89,12 @@ If the item is not found, 0 is returned.
 */
 int inventory_get_quantity(Inventory* inv, const char* name) {
     
-    Item* item = inv->buckets[hash_key(name)%inv->capacity];
+    Item* item = inventory_find(inv, name);
     if(item != NULL){
-        while(item != NULL){
-            if(strcmp(item->name, name) == 0){
-                return item;
-            }
-            else{
-                item = item->next;
-            }
-        }
+        return item->quantity;
     }
     else{
-        return 0;
+        return NULL;
     }
 }
 
