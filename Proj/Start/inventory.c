@@ -218,9 +218,30 @@ Notes:
 */
 int inventory_remove(Inventory* inv, const char* name) {
     // TODO: Phase 2
-    (void)inv;
-    (void)name;
-    return 0;
+    
+    Item* current = inv->buckets[hash_key(name)%inv->capacity];
+    Item* prev;
+    while(1){
+        if(strcmp(current->name, name) == 0){
+            if(strcmp(inv->buckets[hash_key(name)%inv->capacity]->name, name) == 0){
+                inv->buckets[hash_key(name)%inv->capacity] = current->next;
+                free(current);
+                return 1;
+            }
+            else{
+                prev->next = current->next;
+                free(current);
+                return 1;
+            }
+        }
+        else if(current->next != NULL){
+            prev = current;
+            current = current->next;
+        }
+        else{
+            return 0;
+        }
+    }
 }
 
 /*
@@ -247,6 +268,7 @@ void inventory_resize(Inventory* inv) {
     // then pop elements off the top and add them to the new buckets?
     // good first plan ig sure
     Item** newBuckets = calloc((inv->capacity*2)+1, sizeof(Item));
+    int newCap = (inv->capacity*2)+1;
     // order of what is in the linked list for a collision doesnt matter i think, therefore,  can just make a linked list out of everything and then add it to new one ig?
     // have to do this and not just transplant the existing linked lists because for x%z = y%z , x%a doesnt have to = y%a. 
     // i am gonna iterate on the current list and connect everything together i think
@@ -299,6 +321,7 @@ void inventory_resize(Inventory* inv) {
     // prev will be copy of list to free it, i realize now that since i am using .next to connect everything, i either need to work around that, or make new items to put into the buckets
     prev = listOne;
     inv->size = 0;
+    inv->capacity = newCap;
     while(prev->next != NULL){
         
         inventory_add(inv, listOne->name, listOne->quantity);
@@ -315,7 +338,7 @@ void inventory_resize(Inventory* inv) {
     }
     
     // this was actually horrific i am sorry to myself
-    
+
 }
 
 
