@@ -373,5 +373,50 @@ This function completely deletes and frees up all related memory.
 */
 void inventory_destroy(Inventory* inv) {
     // TODO: Phase 2
-    (void)inv;
+    // kinda funny i basically did this for my resize, can probabbbly copy most of the code from there
+    
+    //copied from resize
+    int i = 0;
+    Item* listOne;
+    Item* prev;
+    for(i = 0; i < inv->size; i++){
+        if(inv->buckets[i] != NULL){
+            Item* temp = inv->buckets[i];
+            while(1){
+                if(temp->next != NULL){
+                    temp = temp->next;
+                }
+                else{
+                    listOne = temp;
+                    break;
+                }
+            }
+            i++;
+            break;
+        }
+    }
+    prev = listOne;
+
+    for(int i = 1; i < inv->size; i++){
+        if(inv->buckets[i] != NULL){
+            prev->next = inv->buckets[i];
+            while(1){
+                if(inv->buckets[i]->next != NULL){
+                    inv->buckets[i] = inv->buckets[i]->next;
+                }
+                else{
+                    prev = inv->buckets[i];
+                    break;
+                }
+
+            }
+        }
+    }
+    while(listOne != NULL){
+        prev = listOne->next;
+        free(listOne);
+        listOne = prev;
+    }
+    free(inv->buckets);
+    free(inv);
 }
