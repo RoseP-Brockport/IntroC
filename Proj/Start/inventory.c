@@ -67,19 +67,14 @@ Item* inventory_find(Inventory* inv, const char* name) {
     // TODO: expand to handle collision chains in Phase 2
 
     // if is found no collison
-    while(1){
-        Item* item = inv->buckets[hash_key(name)%inv->capacity];
-        if(strcmp(item->name, name)){
+    Item* item = inv->buckets[hash_key(name)%inv->capacity];
+    while(item != NULL){
+        if(strcmp(item->name, name) == 0){
             return item;
         }
-        //need cases for not first in list, and dne
-        if(item->next == NULL){
-            return NULL;
-        }
-        else{
             item = item->next;
-        }
     }
+    return NULL;
 
 }
 
