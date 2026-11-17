@@ -94,7 +94,7 @@ int inventory_get_quantity(Inventory* inv, const char* name) {
         return item->quantity;
     }
     else{
-        return NULL;
+        return 0;
     }
 }
 
@@ -128,7 +128,7 @@ void inventory_add(Inventory* inv, const char* name, int quantity) {
     
     if(inv->size != 0){
         if(inventory_find(inv, name) == NULL){
-            if(((double)inv->size/ (double)inv->capacity) >= 0.75){
+            if(((double)(inv->size+1)/ (double)inv->capacity) >= 0.75){
                 inventory_resize(inv);
             }
         }
@@ -194,17 +194,23 @@ from the inventory.
 int inventory_consume(Inventory* inv, const char* name, int quantity) {
     // TODO: Phase 2
     
-    if(inventory_find(inv, name) == NULL){
+    Item* item = inventory_find(inv, name);
+    
+    if(item == NULL){
         return 0;
     }
-    if (inventory_find(inv, name)->quantity > 1){
-        inventory_find(inv, name)->quantity -= 1;
+    if(item->quantity > quantity){
+        item->quantity -= quantity;
         return 1;
     }
-    else{
+    if(item->quantity < quantity){
+        return 0;
+    }
+    if(item->quantity == quantity){
         inventory_remove(inv, name);
         return 1;
     }
+    return 0;
 }
 
 /*
@@ -226,16 +232,18 @@ int inventory_remove(Inventory* inv, const char* name) {
     
     Item* current = inv->buckets[hash_key(name)%inv->capacity];
     Item* prev;
-    while(1){
+    while(current != NULL){
         if(strcmp(current->name, name) == 0){
             if(strcmp(inv->buckets[hash_key(name)%inv->capacity]->name, name) == 0){
                 inv->buckets[hash_key(name)%inv->capacity] = current->next;
+                free(current->name);
                 free(current);
                 inv->size -= 1;
                 return 1;
             }
             else{
                 prev->next = current->next;
+                free(current->name);
                 free(current);
                 inv->size -= 1;
                 return 1;
@@ -249,6 +257,7 @@ int inventory_remove(Inventory* inv, const char* name) {
             return 0;
         }
     }
+    return 0;
 }
 
 /*
@@ -274,7 +283,7 @@ void inventory_resize(Inventory* inv) {
     // to make this easy, iterate through the inventory and add all elements to a stack,
     // then pop elements off the top and add them to the new buckets?
     // good first plan ig sure
-    Item** newBuckets = calloc((inv->capacity*2)+1, sizeof(Item));
+    Item** newBuckets = calloc((inv->capacity*2)+1, sizeof(Item*));
     int newCap = (inv->capacity*2)+1;
     // order of what is in the linked list for a collision doesnt matter i think, therefore,  can just make a linked list out of everything and then add it to new one ig?
     // have to do this and not just transplant the existing linked lists because for x%z = y%z , x%a doesnt have to = y%a. 
@@ -282,18 +291,19 @@ void inventory_resize(Inventory* inv) {
 
     // pseudo
     // iterate over buckets, if current bucket not null, connect previous non empty bucket item.next to point to this item
-    int i = 0;
-    Item* listOne;
+    unsigned long long int i = 0;
+    Item* listOne = NULL;
     Item* prev;
-    for(i = 0; i < inv->size; i++){
+    Item* temp = NULL;
+    for(i = 0; i < inv->capacity; i++){
         if(inv->buckets[i] != NULL){
-            Item* temp = inv->buckets[i];
+            listOne = inv->buckets[i];
+            temp = listOne;
             while(1){
                 if(temp->next != NULL){
                     temp = temp->next;
                 }
                 else{
-                    listOne = temp;
                     break;
                 }
             }
@@ -301,9 +311,9 @@ void inventory_resize(Inventory* inv) {
             break;
         }
     }
-    prev = listOne;
+    prev = temp;
 
-    for(int i = 1; i < inv->size; i++){
+    for(; i < inv->capacity; i++){
         if(inv->buckets[i] != NULL){
             prev->next = inv->buckets[i];
             while(1){
@@ -329,17 +339,18 @@ void inventory_resize(Inventory* inv) {
     prev = listOne;
     inv->size = 0;
     inv->capacity = newCap;
-    while(prev->next != NULL){
+    while(prev != NULL){
         
-        inventory_add(inv, listOne->name, listOne->quantity);
+        inventory_add(inv, prev->name, prev->quantity);
         prev = prev->next;
     }
 
     // ts genuinely so fucked
 
     // now freeing all old items...
-    while(listOne->next != NULL){
+    while(listOne != NULL){
         prev = listOne->next;
+        free(listOne->name);
         free(listOne);
         listOne = prev;
     }
@@ -373,18 +384,19 @@ void inventory_destroy(Inventory* inv) {
     // kinda funny i basically did this for my resize, can probabbbly copy most of the code from there
     
     //copied from resize
-    int i = 0;
-    Item* listOne;
+    unsigned long long int i = 0;
+    Item* listOne = NULL;
     Item* prev;
-    for(i = 0; i < inv->size; i++){
+    Item* temp = NULL;
+    for(i = 0; i < inv->capacity; i++){
         if(inv->buckets[i] != NULL){
-            Item* temp = inv->buckets[i];
+            listOne = inv->buckets[i];
+            temp = listOne;
             while(1){
                 if(temp->next != NULL){
                     temp = temp->next;
                 }
                 else{
-                    listOne = temp;
                     break;
                 }
             }
@@ -392,9 +404,9 @@ void inventory_destroy(Inventory* inv) {
             break;
         }
     }
-    prev = listOne;
+    prev = temp;
 
-    for(int i = 1; i < inv->size; i++){
+    for(; i < inv->capacity; i++){
         if(inv->buckets[i] != NULL){
             prev->next = inv->buckets[i];
             while(1){
@@ -411,6 +423,7 @@ void inventory_destroy(Inventory* inv) {
     }
     while(listOne != NULL){
         prev = listOne->next;
+        free(listOne->name);
         free(listOne);
         listOne = prev;
     }
